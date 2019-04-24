@@ -48,8 +48,13 @@ class S3Client {
       });
     }
     public async deleteFile(fileName: string): Promise<DeleteResponse> {
+      let separator = "-"
+      if (this.config.region === "cn" || this.config.region === "us-east-1"){
+        separator = "."
+      }
+
       const url: string = `https://${this.config.bucketName}.s3${
-        this.config.region ? "-" + this.config.region : ""
+        this.config.region ? separator + this.config.region : ""
         }.amazonaws.com/${
         this.config.dirName ? this.config.dirName + "/" : ""
         }${fileName}`;
